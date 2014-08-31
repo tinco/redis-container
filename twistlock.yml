@@ -1,0 +1,8 @@
+name: redis
+description: Redis cache database
+provided_services:
+    redis:
+        port: 6379
+        description: Redis database interface.
+resources:
+environment_variables:
