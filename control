@@ -23,6 +23,12 @@ stop() {
 	docker rm $1
 }
 
+status() {
+	cid=$1
+	state=$(docker inspect --format '{{ .State.Running }}' $cid)
+	echo "{\"running\" : \"$state\"}"
+}
+
 usage() {
     echo "This script controls the container in this directory. It can be run with any of the following commands."
     echo ""
@@ -31,6 +37,7 @@ usage() {
     echo "    control run                         # Run a container, prints id to stdout"
     echo "    control link <id>                   # Link a container, link options are passed in JSON over stdin "
     echo "    control stop <id>                   # Stop a container"                  
+    echo "    control status <id>                 # Status of a container"                  
 }
 
 COMMAND=$1
@@ -47,6 +54,9 @@ case $COMMAND in
         ;;
     "stop")
         stop $@
+        ;;
+    "status")
+        status $@
         ;;
     *)
         usage
